@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>栈的封装</title>
+</head> 
+<body>
+    <script>
+        function stack () {
+          this.items = []
+
+          // 将元素压入栈
+          stack.prototype.push = function(element) {
+            this.items.push(element)
+          }
+          // 将最后一个元素弹出
+          stack.prototype.pop = function(element) {
+            return this.items.pop()
+          }
+          stack.prototype.peek = function() {
+            return this.items[this.items.length-1]
+          }
+          stack.prototype.isEmpty = function() {
+            return this.items.length == 0
+          }
+       
+          
+        }
+        // 栈的使用
+        var s = new Stack()
+
+        // s.push(1)
+        // s.push(2)
+        // s.push(3)
+        // s.push(4)
+        // s.push(5)
+        // s.pop()
+        // s.pop()
+        // s.peek()
+        // s.isEmpty()
+        // // s,size()
+        // s.toString()
+        // console.log(s.peek())
+
+        // 函数：将十进制转为二进制
+        function dec2bin(decNumber){
+            // 1.定义栈对象
+            var stack = new Stack()
+            // 2.循环操作
+            while(decNumber>0){
+                // 获取余数放入栈中
+                stack.push(decNumber%2)
+                // 商作为下一次运行的数字
+                decNumber = Math.floor(decNumber/2)
+            }
+
+            // 3.从栈中取出0和1
+            var binaryString = ''
+            while(!stack.isEmpty()){
+                binaryString += stack.pop()
+            }
+            return binaryString
+        }
+
+        console.log(dec2bin(8))
+
+    </script>
+</body>
+</html>

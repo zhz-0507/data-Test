@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 封装优先级队列
+        function PriorityQueue(){
+            // 在PriorityQueue重新创建了一个类：可以理解成内部类
+            function QueueElement(element,priority){
+                this.element = element
+                this.priority = priority
+            }
+            // 封装属性
+            this.items = []
+
+            // 实现插入方法
+            PriorityQueue.prototype.enQueue = function(element,priority){
+                // 创建QueueElement对象
+                var queueElement = new QueueElement(element,priority)
+            
+                // 1.判断队列是否为空
+                if(this.items.length == 0){
+                    this.items.push(queueElement)
+                }else{
+                    var added = false
+                    for(var i=0;i<this.items.length;i++){
+                        if(queueElement.priority<this.items[i].priority){
+                            this.items.splice(i,0,queueElement)
+                            added =  true
+                            break
+                        }
+                    }
+                    if(!added){
+                        this.items.push(queueElement)
+                    }
+                }
+            
+            
+            
+            
+            
+            }
+            // 2.从队列中删除前端元素
+            PriorityQueue.prototype.deQueue = function(){
+                return this.items.shift()
+            }
+            // 3.查看前端元素
+            PriorityQueue.prototype.front = function(){
+                return this.items[0]
+            }
+            // 4.查看队列是否为空
+            PriorityQueue.prototype.isEmpty = function(){
+                return this.items.length == 0
+            }
+            // 5.查看队列中元素的个数
+            PriorityQueue.prototype.size = function(){
+                return this.items.length
+            }
+            // 6.toSting方法 
+            PriorityQueue.prototype.toString = function(){
+                var resultString = ''
+                for(var i=0;i<this.items.length;i++){
+                    resultString += this.items[i].element + '-'+this.items[i].priority
+                }
+                return resultString
+            }
+        }
+        // 测试代码
+        var pq = new PriorityQueue()
+
+        pq.enQueue('abc',11)
+        pq.enQueue('bgn',111)
+        pq.enQueue('abd',110)
+        pq.enQueue('nba',12)
+        
+        console.log(pq)
+    </script>
+</body>
+</html>

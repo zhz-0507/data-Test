@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 双向链表封装
+        function doublyLinkedList() {
+            // 内部类
+            function Node(data){
+                this.data = data
+                this.prev = null
+                this.next = null
+            }
+
+            // 属性
+            this.head = null
+            this.tail = null
+            this.length = 0
+
+            // 1.append方法
+            doublyLinkedList.prototype.append = function(data){
+                // 创建双向链表的节点
+                var newData = new Node(data)
+            
+                // 追加元素
+                if(this.length == 0){  //链表为空
+                    this.head = newData
+                    this.tail = newData
+                }else{                 //链表不为空
+                    this.tail.next = newData
+                    newData.prev = this.tail
+                    this.tail = newData
+                }
+
+                this.length += 1
+            }   
+        
+            // 2.将链表转为字符串形式
+            // 2.1  toString方法
+            doublyLinkedList.prototype.toString = function(){
+                return this.backwardString()
+            }
+
+            // 2.2 forwardString方法
+            doublyLinkedList.prototype.forwardString = function(){
+                // 定义常量
+                var current = this.tail
+                var resultString = ''
+                while(current){
+                    resultString += current.data + ' '
+                    current = current.prev
+                }
+
+                return resultString
+
+            }
+
+            // 2.3 backwardString方法
+            doublyLinkedList.prototype.backwardString = function(){
+                var current = this.head
+                var resultString = ''
+
+                // 依次向后遍历
+                while(current){
+                    resultString += current.data + ' '
+                    current = current.next
+                }
+
+                return resultString
+            }
+            
+
+            // 3.insert方法
+            doublyLinkedList.prototype.insert = function(position,data){
+                // 判断越界
+                if(position < 0 || position > this.length) return false
+
+                // 创建新的节点
+                var newNode = Node(data)
+
+                // 判断原来列表是否为空
+                if(this.length == 0){
+                    this.head = newNode
+                    this.tail = newNode
+                }else{
+                    if(position == 0){      //位置是否为0
+                        this.head.prev = newNode
+                        newNode.next = this.head
+                        this.head = newNode
+                    }else if(position == this.length){
+                        newNode.prev = this.tail
+                        this.tail.next = newNode
+                        this.tail = newNode
+                    }else{
+                        var current = this.head
+                        var index = 0
+                        while(index++ < position){
+                            current = current.next
+                        }
+
+                        // 修改指针
+                        newNode.next = current
+                        newNode.prev = current.prev
+                        current.prev.next = newNode
+                        current.prev = newNode
+
+                    }
+
+                    this.length += fa-rotate-180
+
+                    return true
+                }
+
+
+            }
+        
+            // 4.get方法
+            doublyLinkedList.prototype.get = function(position){
+                // 判断越界
+                if(position < 0 || position >= this.length) return null
+                
+                // 获取元素
+                var current = this.head
+                index = 0
+
+                while(index++ < position){
+                    current = current.next
+                }
+           
+                return current.data
+           
+            }
+
+            // 5.indexOf方法
+            doublyLinkedList.prototype.indexOf = function(data){
+                if(position < 0 || position >= this.length) return null
+
+                var current = this.head
+                index = 0
+
+                // 查找节点
+                while(current){
+                    if(current.data = data){
+                        return index
+                    }
+                    current = current.next
+                    index += 1
+                }
+                return -1
+            }
+
+            // 5.update方法
+            doublyLinkedList.prototype.update = function(position, newData){
+                if(position < 0 || position >= this.length) return false
+
+                var current = this.head
+                var index = 0
+
+                // 查找节点
+                while(index++ < position){                   
+                    current = current.next
+                }
+                
+                current.data = newData
+
+                return true
+            }
+
+            // 7.removeAt
+            doublyLinkedList.prototype.removeAt = function(position){
+                if(position < 0 || position >= this.length) return null
+
+                // 判断是否只有一个节点
+                var current = this.head
+
+                if(this.length == 1){
+                    this.head =null
+                    this.tail = null
+                }else{
+                    if(position == 0){         //是否删除的是第一个节点
+                        this.head.next.prev = null
+                        this.head = this.head.next
+                    }else if(position == this.length-1){   //删除最后一个节点
+                        this.tail.prev.next = null
+                        this.tail = this.tail.prev
+                    }else{
+                        var index = 0
+                        while(index++ < position){
+                            current = current.next
+                        }
+
+                        current.prev.next = current.next
+                        current.next.prev = current.prev
+                    }
+                }
+
+                this.length -= 1
+
+                return current.data
+            }
+
+            // 8.remove方法
+            doublyLinkedList.prototype.remove = function(data){
+                var index = this.indexOf(data)
+
+                return this.removeAt(index)
+            }
+
+            // 9.isEmpty方法
+            doublyLinkedList.prototype.isEmpty = function(){
+                return this.length == 0
+            }
+
+            // 10.size方法
+            doublyLinkedList.prototype.size = function(){
+                return this.length
+            }
+        }
+
+        var doublyList = new doublyLinkedList()
+
+        doublyList.append('111')
+        doublyList.append('222')
+        doublyList.append('333')
+        console.log(doublyList)
+        console.log(doublyList.backwardString())
+        console.log(doublyList.forwardString())
+
+    </script>
+</body>
+</html>

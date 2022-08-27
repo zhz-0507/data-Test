@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>栈的封装</title>
+</head> 
+<body>
+    <script>
+        // 封装栈类  ----用数组实现
+        function Stack(){
+            this.items = []
+
+            // 1.将元素压入栈
+            Stack.prototype.push = function(element){
+                this.items.push(element)
+            }
+            // 2.从栈中取出元素
+            Stack.prototype.pop = function(){
+                return this.items.pop()
+            }
+            // 3.查看一下栈顶元素
+            Stack.prototype.peek = function(){
+                return this.items[this.items.length-1]
+            }
+            // 4.判断栈是否是空
+            Stack.prototype.isEmpty = function(){
+                return this.items.length == 0
+            }
+            // 5.获取栈中元素的个数
+            Stack.prototype.size = function(){
+                return this.items.length
+            }
+            // 6.toString方法
+            Stack.prototype.toString = function(){
+                var resultString = ''
+                for(var i=0;i<this.items.length;i++){
+                    resultString += this.items[i] + ''
+                }
+                return resultString
+            }
+        }
+        // 栈的使用
+        var s = new Stack()
+
+        // s.push(1)
+        // s.push(2)
+        // s.push(3)
+        // s.push(4)
+        // s.push(5)
+        // s.pop()
+        // s.pop()
+        // s.peek()
+        // s.isEmpty()
+        // // s,size()
+        // s.toString()
+        // console.log(s.peek())
+
+        // 函数：将十进制转为二进制
+        function dec2bin(decNumber){
+            // 1.定义栈对象
+            var stack = new Stack()
+            // 2.循环操作
+            while(decNumber>0){
+                // 获取余数放入栈中
+                stack.push(decNumber%2)
+                // 商作为下一次运行的数字
+                decNumber = Math.floor(decNumber/2)
+            }
+
+            // 3.从栈中取出0和1
+            var binaryString = ''
+            while(!stack.isEmpty()){
+                binaryString += stack.pop()
+            }
+            return binaryString
+        }
+
+        console.log(dec2bin(8))
+
+    </script>
+</body>
+</html>

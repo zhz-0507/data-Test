@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var fibonacci = []
+        fibonacci[0] = 1
+        fibonacci[1] = 1
+
+        for(var i=2;i<=20;i++){
+            fibonacci[i] = fibonacci[i-1] + fibonacci[i-2]
+        }
+
+        console.log(fibonacci)
+    </script>
+</body>
+</html>
